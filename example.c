@@ -1,6 +1,12 @@
 #include "arglib.h"
 #include <stdio.h>
 
+void help(){
+	printf("--help      | show this dialog\n"
+	       "--test      | parses a value\n"
+	       "--long-test | shows multi-line code-execution\n");
+}
+
 int main (int argc, char *argv[]) {
 
 	// For each argument
