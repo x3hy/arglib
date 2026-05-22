@@ -1,0 +1,8 @@
+arglib.c
+
+arglib.c is a basic argument parsing library for minimal use cases. It uses zero dependencies and uses a switch-case system for inline code execution. This library is roughly one-hundred lines of code. please check example.c for an example of usage.
+
+How does arglib work?
+arglib uses a basic for-loop to iterate through arguments in argv. The provided filter function works as a switch-case and allows you to execute inline code on an argument match. This library will (on filter) put the value of an argument back into the argument register, eg if you provide argv[1] which is equal to "--test=123", after the filter, argv[1] is now equal to 123. This library is error-safe and prioritises user setup over automatic setup.
+
+See also x3hy/plib
