@@ -2,24 +2,22 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]){
-	// for each argument
-	arg_each(argv, argc){
+	// For each argument
+	FORARGS {
 
-		// can run single line code after statement
-		acase("--help") printf("Help called!\n");
+		// Can run single line code after statement
+		ARG("--help") printf("Help called!\n");
 
 		// get the value of the argument
-		acase("--test") printf("test run with value: %s\n", avalue);
+		ARG("--test") printf("test run with value: %s\n", ARGVAL);
 
-		// multi-line code execution
-		acase("--alt-test"){
+		// Multi-line code execution
+		ARG("--alt-test"){
 			printf("test123\n");
 			printf("test321\n");
 		}
-
-		// print some extra info
-		printf("value: %s, exitcode: %d\n", avalue, __arg_exitcode);
 	}
 
+	// That's it!
 	return 0;
 }
