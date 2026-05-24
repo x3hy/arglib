@@ -1,8 +1,11 @@
 arglib.c
 
-arglib.c is a basic argument parsing library for minimal use cases. It uses zero dependencies and uses a switch-case system for inline code execution. This library is roughly one-hundred lines of code. please check example.c for an example of usage.
+arglib.c is a basic argument parsing library for minimal use cases. It uses one dependency (stdio) and uses a switch-case system for inline code execution. This library is roughly one-hundred lines of code. Please check example.c for an example of usage.
 
 How does arglib work?
 arglib uses a basic for-loop to iterate through arguments in argv. The provided filter function works as a switch-case and allows you to execute inline code on an argument match. This library will (on filter) put the value of an argument back into the argument register, eg if you provide argv[1] which is equal to "--test=123", after the filter, argv[1] is now equal to 123. This library is error-safe and prioritises user setup over automatic setup.
+
+What dependencies does arglib use?
+Arglib uses one single dependency that being stdio.h for its fputs putchar and stdout. Arglib now has a basic help-menu function that shows all of the possible arguments along with a short given description. Please read example.c for an example of this. 
 
 See also x3hy/plib

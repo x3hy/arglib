@@ -55,9 +55,11 @@ static int _is_arg_match(char *pattern, char *arg, char splitchar){
 	return 0;
 }
 
-static int  __arg_exitcode  =  0;
-static char __arg_splitchar = '=';
-static int __arg_show_help  =  0;
+static int  __arg_exitcode       =  0;
+static char __arg_splitchar      = '=';
+static int  __arg_show_help      =  0;
+static int  __arg_help_len       =  0;
+static int  __arg_help_has_count =  1;
 
 // Loops through arguments given
 #define FORARGS \
@@ -66,27 +68,45 @@ static int __arg_show_help  =  0;
 // gets the value index from argv
 #define ARGVAL argv[__arg_i]
 
-#ifdef ARGLIB_HELP
-#include <stdio.h>
+#include <stdio.h> // fputs putchar stdout
+
 // This should always return 1
 static int _arg_show_help_menu(char *arg, char *desc){
-	if (__arg_show_help)
-		printf ("%s - %s\n", arg, desc);
+	const int arg_len = _arglib_strlen(arg);
+	if (__arg_show_help){
+		fputs(arg, stdout);
+		for (int i = 0; i < __arg_help_len - arg_len; i++)
+			// Print padding to line up descriptions.
+			putchar(' ');
+		
+		// Seperator
+		fputs(" | ", stdout);
+		fputs(desc, stdout);
+		putchar('\n');
+
+	// if the current argument is larger than the
+	// __arg_help_len then make it equal to the
+	// larger value
+	} else if (__arg_help_has_count == 0){
+	 	if (__arg_help_len < arg_len)
+			__arg_help_len = arg_len;
+		return 1;
+	}
+
 	return __arg_show_help;
 }
 
 #define HELP(func, ac, av) \
 	do { \
+		if (__arg_help_len == 0){ \
+			__arg_help_has_count = 0; \
+			func(ac, av); \
+			__arg_help_has_count = 1; \
+		} \
 		__arg_show_help = 1; \
 		func(ac, av); \
 		__arg_show_help = 0; \
 	} while (0)
-
-#else
-// filler function
-#define _arg_show_help_menu(a,b) 0
-#define HELP(func, ac, av) 0
-#endif
 
 /* Uses a switch case to allow for inline code execution.
  * the `switch` line also assigns __arg_success the return

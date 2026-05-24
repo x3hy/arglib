@@ -1,4 +1,3 @@
-#define ARGLIB_HELP
 #include "arglib.h"
 #include <stdio.h>
 
@@ -6,9 +5,11 @@
 void argparse(int argc, char *argv[]){
 	FORARGS {
 		// Can run single line code after statement
-		ARG ("--help", "Show a basic help menu"){
+		// Built-in help menu
+		ARG ("--help", "Show this basic help menu")
+			/* Argument parsing is required to occur within
+			 * a function in order to use the HELP menu. */
 			HELP(argparse, argc, argv);
-		}
 
 		// Get the value of the argument
 		ARG ("--test", "Basic testing argument")
@@ -24,6 +25,9 @@ void argparse(int argc, char *argv[]){
 
 // Argument processor function
 int main (int argc, char *argv[]) {
+	
+	/* Pass the command line arguments into parser
+	 * function. */
 	argparse(argc, argv);
 
 	// That's it!
