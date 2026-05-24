@@ -57,6 +57,7 @@ static int _is_arg_match(char *pattern, char *arg, char splitchar){
 
 static int  __arg_exitcode  =  0;
 static char __arg_splitchar = '=';
+static int __arg_show_help  =  0;
 
 // Loops through arguments given
 #define FORARGS \
@@ -65,13 +66,36 @@ static char __arg_splitchar = '=';
 // gets the value index from argv
 #define ARGVAL argv[__arg_i]
 
+#ifdef ARGLIB_HELP
+#include <stdio.h>
+// This should always return 1
+static int _arg_show_help_menu(char *arg, char *desc){
+	if (__arg_show_help)
+		printf ("%s - %s\n", arg, desc);
+	return __arg_show_help;
+}
+
+#define HELP(func, ac, av) \
+	do { \
+		__arg_show_help = 1; \
+		func(ac, av); \
+		__arg_show_help = 0; \
+	} while (0)
+
+#else
+// filler function
+#define _arg_show_help_menu(a,b) 0
+#define HELP(func, ac, av) 0
+#endif
+
 /* Uses a switch case to allow for inline code execution.
  * the `switch` line also assigns __arg_success the return
  * code of _is_arg_match which checks if a given argument
  * matches the given pattern. */
-#define ARG(arg) \
-	switch(__arg_exitcode = _is_arg_match(arg, \
-				ARGVAL, __arg_splitchar)) \
-		case 0:
+#define ARG(arg, desc) \
+	if (!_arg_show_help_menu(arg, desc)) \
+		switch(__arg_exitcode = _is_arg_match(arg, \
+					ARGVAL, __arg_splitchar)) \
+			case 0:
 
 #endif//ARGLIB_H
