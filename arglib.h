@@ -79,14 +79,14 @@ static int _arg_show_help_menu(char *arg, char *desc){
 			// Print padding to line up descriptions.
 			putchar(' ');
 		
-		// Seperator
+		// Separator
 		fputs(" | ", stdout);
 		fputs(desc, stdout);
 		putchar('\n');
 
-	// if the current argument is larger than the
-	// __arg_help_len then make it equal to the
-	// larger value
+	/* if the current argument is larger than the
+	 * __arg_help_len then make it equal to the
+	 * larger value. */
 	} else if (__arg_help_has_count == 0){
 	 	if (__arg_help_len < arg_len)
 			__arg_help_len = arg_len;
