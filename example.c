@@ -1,5 +1,5 @@
-#include "arglib.h"
 #include <stdio.h>
+#include "arglib.h"
 
 // Argument processor function
 void argparse(int argc, char *argv[]){
