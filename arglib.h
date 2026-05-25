@@ -44,7 +44,6 @@ static int _is_arg_match(char *pattern, char *arg, char splitchar){
 	/* now we have the following:
 	 * key: first half of the argument (before the splitchar)
 	 * arg: last half of the argument (after the splitchar) */
-
 	for (int i = 0; i < _arglib_strlen(pattern); i++)
 		if (pattern[i] != key[i]){
 			// reset the argument using undobuf
@@ -70,11 +69,13 @@ static int  __arg_help_has_count =  1;
 
 #include <stdio.h> // fputs putchar stdout
 
-// This should always return 1
+// Help menu backend
 static int _arg_show_help_menu(char *arg, char *desc){
 	const int arg_len = _arglib_strlen(arg);
+
 	if (__arg_show_help){
 		fputs(arg, stdout);
+
 		for (int i = 0; i < __arg_help_len - arg_len; i++)
 			// Print padding to line up descriptions.
 			putchar(' ');
@@ -96,6 +97,7 @@ static int _arg_show_help_menu(char *arg, char *desc){
 	return __arg_show_help;
 }
 
+// Help menu instructions
 #define HELP(func, ac, av) \
 	do { \
 		if (__arg_help_len == 0){ \
@@ -108,6 +110,9 @@ static int _arg_show_help_menu(char *arg, char *desc){
 		__arg_show_help = 0; \
 	} while (0)
 
+#define ALTHELP(func) \
+	HELP(func, 2, NULL)
+
 /* Uses a switch case to allow for inline code execution.
  * the `switch` line also assigns __arg_success the return
  * code of _is_arg_match which checks if a given argument
@@ -118,4 +123,4 @@ static int _arg_show_help_menu(char *arg, char *desc){
 					ARGVAL, __arg_splitchar)) \
 			case 0:
 
-#endif//ARGLIB_H
+#endif //ARGLIB_H
