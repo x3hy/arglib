@@ -7,26 +7,21 @@ void argparse(int argc, char *argv[]){
 		// Can run single line code after statement
 		// Built-in help menu
 		ARG ("--help", "Show this basic help menu")
-			/* Argument parsing is required to occur within
-			 * a function in order to use the HELP menu. */
-			HELP(argparse, argc, argv);
+			HELP(argparse);
 
 		// Multi-line code execution
-		ARG ("--alt-test", "Another testing argument") {
+		ARG ("--alt-test", "Another testing argument"){
 			printf ("test123\n");
 			printf ("test321\n");
 			puts(ARGVAL);
 		}
 
+		// Positional argument
 		ARG ("--positional", "Positional argument (must be the last given argument")
-			if (! ARGLAST){
-				// argument is not at the end of the list
+			if (! ARGLAST) {
 				printf("%s must be the end argument\n", arg_name);
 				goto exit;
-			} else 
-				printf ("working\n");
-
-
+			} else printf ("working\n");
 		// ...
 	}
 	exit:
@@ -40,7 +35,7 @@ int main (int argc, char *argv[]) {
 
 		/* When not inside a FORARGS loop,
 		 * you can use ALTHELP. */
-		ALTHELP(argparse);
+		HELP(argparse);
 		return 1;
 	}
 	

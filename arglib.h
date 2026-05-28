@@ -103,7 +103,7 @@ static int _arg_show_help_menu(char *arg, char *desc){
 }
 
 // Help menu instructions
-#define HELP(func, ac, av) \
+#define _HELP(func, ac, av) \
 	do { \
 		if (__arg_help_len == 0){ \
 			__arg_help_has_count = 0; \
@@ -115,14 +115,13 @@ static int _arg_show_help_menu(char *arg, char *desc){
 		__arg_show_help = 0; \
 	} while (0)
 
-#define ALTHELP(func) \
-	HELP(func, 2, NULL)
+#define HELP(func) \
+	_HELP(func, 2, NULL)
 
 /* Uses a switch case to allow for inline code execution.
  * the `switch` line also assigns __arg_success the return
  * code of _is_arg_match which checks if a given argument
  * matches the given pattern. */
-#define arg arg
 static char *arg_name;
 static char *arg_desc;
 #define ARG(arg, desc) \
@@ -132,6 +131,5 @@ static char *arg_desc;
 		switch(__arg_exitcode = _is_arg_match(arg, \
 					ARGVAL, __arg_splitchar)) \
 			case 0:
-
 
 #endif //ARGLIB_H
