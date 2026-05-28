@@ -18,8 +18,18 @@ void argparse(int argc, char *argv[]){
 			puts(ARGVAL);
 		}
 
+		ARG ("--positional", "Positional argument (must be the last given argument")
+			if (! ARGLAST){
+				// argument is not at the end of the list
+				printf("%s must be the end argument\n", arg_name);
+				goto exit;
+			} else 
+				printf ("working\n");
+
+
 		// ...
 	}
+	exit:
 }
 
 // Argument processor function

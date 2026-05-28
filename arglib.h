@@ -61,11 +61,16 @@ static int  __arg_help_len       =  0;
 static int  __arg_help_has_count =  1;
 
 // Loops through arguments given
+#define ARGIDX __arg_i
+#define ARGLAST (ARGIDX == argc-1)
+#define ARGFIRST (ARGIDX == 0)
+#define ARGENTH(i) argc - (i)
+
 #define FORARGS \
-	for (int __arg_i = 1; __arg_i < argc; __arg_i++)
+	for (int ARGIDX = 1; ARGIDX < argc; ARGIDX++)
 
 // gets the value index from argv
-#define ARGVAL argv[__arg_i]
+#define ARGVAL argv[ARGIDX]
 
 #include <stdio.h> // fputs putchar stdout
 
@@ -117,10 +122,16 @@ static int _arg_show_help_menu(char *arg, char *desc){
  * the `switch` line also assigns __arg_success the return
  * code of _is_arg_match which checks if a given argument
  * matches the given pattern. */
+#define arg arg
+static char *arg_name;
+static char *arg_desc;
 #define ARG(arg, desc) \
+	arg_name = arg; \
+	arg_desc = desc; \
 	if (!_arg_show_help_menu(arg, desc)) \
 		switch(__arg_exitcode = _is_arg_match(arg, \
 					ARGVAL, __arg_splitchar)) \
 			case 0:
+
 
 #endif //ARGLIB_H
