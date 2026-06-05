@@ -3,6 +3,7 @@
 
 // Basic strlen implementation.
 static int _arglib_strlen(char *str){
+	if (!str) return 0;
 	int str_s = 0;
 	while (str[str_s])
 		str_s++;
@@ -13,6 +14,8 @@ static int _arglib_strlen(char *str){
  * a splitchar. */
 static int _is_arg_match(char *pattern, char *arg, char splitchar){
 	const int arg_len = _arglib_strlen(arg);
+	if (arg[0] == '*')
+		return 0;
 
 	// Locate the splitchar within the argument
 	int split = 0;
@@ -62,9 +65,11 @@ static int  __arg_help_has_count =  1;
 
 // Loops through arguments given
 #define ARGIDX __arg_i
-#define ARGLAST (ARGIDX == argc-1)
-#define ARGFIRST (ARGIDX == 0)
-#define ARGENTH(i) argc - (i)
+#define ARGLAST (argc-1)
+#define ARGFIRST 0
+#define IS_ARGLAST (ARGIDX == argc-1)
+#define IS_ARGFIRST (ARGIDX == 0)
+#define ARGNEXT continue
 
 #define FORARGS \
 	for (int ARGIDX = 1; ARGIDX < argc; ARGIDX++)
@@ -129,7 +134,14 @@ static char *arg_desc;
 	arg_desc = desc; \
 	if (!_arg_show_help_menu(arg, desc)) \
 		switch(__arg_exitcode = _is_arg_match(arg, \
-					ARGVAL, __arg_splitchar)) \
+			ARGVAL, __arg_splitchar)) \
 			case 0:
+
+/* same as ARG just any arg works if given BUT it must be at a certain
+ * idx. */
+#define POSANY(n, arg, desc) \
+		if (!_arg_show_help_menu(arg, desc) && ARGIDX == n) \
+			switch(0) \
+				case 0:
 
 #endif //ARGLIB_H

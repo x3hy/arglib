@@ -4,6 +4,12 @@
 // Argument processor function
 void argparse(int argc, char *argv[]){
 	FORARGS {
+		// Positional argument
+		POSANY(ARGLAST, "filename", "Must be the last argument"){
+			printf("%s\n", ARGVAL);
+			ARGNEXT;
+		}
+
 		// Can run single line code after statement
 		// Built-in help menu
 		ARG ("--help", "Show this basic help menu")
@@ -16,12 +22,6 @@ void argparse(int argc, char *argv[]){
 			puts(ARGVAL);
 		}
 
-		// Positional argument
-		ARG ("--positional", "Positional argument (must be the last given argument")
-			if (! ARGLAST) {
-				printf("%s must be the end argument\n", arg_name);
-				goto exit;
-			} else printf ("working\n");
 		// ...
 	}
 	exit:
