@@ -10,6 +10,20 @@ static int _arglib_strlen(char *str){
 	return str_s+1;
 }
 
+// Basic strcmp implementation
+static int _arglib_strcmp(char *str1, char *str2){
+	int i = 0;
+
+	while (str1[i] != '\0' && str2[i] != '\0') {
+		if (str1[i] != str2[i])
+			break;
+
+		i++;
+	}
+
+	return (unsigned char)str1[i] - (unsigned char)str2[i];
+}
+
 /* checks if a given argument matches based on
  * a splitchar. */
 static int _is_arg_match(char *pattern, char *arg, char splitchar){
@@ -136,6 +150,13 @@ static char *arg_desc;
 		switch(__arg_exitcode = _is_arg_match(arg, \
 			ARGVAL, __arg_splitchar)) \
 			case 0:
+
+
+// If arg is the same as ARGVAL, then we know that
+// no "value" was given to the argument. As per the
+// char-shift nature of the parsing function.
+#define ARG_PROVIDED \
+	(_argliv_strcmp(arg, ARGVAL))
 
 /* same as ARG just any arg works if given BUT it must be at a certain
  * idx. */
