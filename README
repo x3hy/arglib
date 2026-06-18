@@ -1,24 +1,20 @@
 arglib.h
 ---
 
-What are commandline arguments?
-On a computer, programs are usually compiled which is where the high-level human-readable code into machine-readable code. When a program is compiled, it cannot then be read by a human, this means there is no way to go back into your compiled program to create or modify code/data. Command-line arguments are a form of input where (if managed correctly) the program can be provided certain flags or values that can be then used in your code AFTER its compiled.
+arglib is a tinyflag argument parser for suckless or just minimal deps programs. Arglib parses arguments as follows
 
-Flags:
-As I've just mentioned, data is given to the program using flags. Flags are special words and symbols that indicate unique settings to the program. Flags can be thought of the same way parameters of a function are used. If we had a program that, given two numbers, sums the given numbers and prints the result - here's what the command line flags may look like:
+./program -m=123 -Tlo
 
-sumprogram --number-1 10 --number-2 20
-Sum: 30
+Which is interpreted as the following argument values: m, T, l and o. Arglib has a set of macros that let you start a loop where you can provide inline code for each condition. This is done using single line loops, whiles, switch(s) and if(s). Please read example.c for an idea of implementation. This lib is under 50 lines of code, please review arglib.h for more details on how arglib works. arglib will go arg by arg through argv and then letter by letter, skipping the first char of each arg that way things like "-abc" become "abc" which are then processed as args 'a', 'b' and 'c'.
 
-sumprogram 10 20
-Sum: 30
 
-sumprogram -a=10 -b=20
-Sum 30
-
-Conventionally, flags are prefixed with a hyphen. As you can see above, in most programs, if the flag is longer then one char, the flag uses a double hyphen but when there is only one letter after the flag, only one hyphen is used. Another thing you may notice, there are no capital letters. These are just conventions, nothing is stopping you from using a different symbol instead of a hyphen and I'm not going to stop you from using capital letters. Different systems use different flag styles.
-
-Another thing you may notice, the first and second option don't use equal signs whereas the last example does.. This is also a preference/conventional thing, some programs require you to use a space to separate the keys and values, whereas in some programs you are required to use a equal sign. In C, your main function can have three paramters, argc, and argv being the first two. argc is an INT value holding the total amount of arguments given, argv is a CHAR* array holding each individual argument given (arguments are split by unescaped spaces). arglib uses the lower style, where arguments are prefixed with a hyphen and use a equal sign to represent values.
----
-
-arglib.h is a low-level library written in under 50 lines of code. Arglib provides a series of macros (no functions) that allow programs to manage commandline arguments with ease.
+Features:
+- Minimal size (under 50 lines of code, or 1183 bytes).
+- Zero dependencies (not even standard lib, this is thanks to macro inclusion).
+- Zero memory allocation.
+- Fast and reliable
+- Easy implementation.
+- Multi-arg values (such as -Tlo being the same as -T -l -o)
+- Value collection (check example.h's "-t" flag)
+- Builtin HELP menu
+- Portable (will work on any OS)

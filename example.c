@@ -2,31 +2,33 @@
 #include "arglib.h"
 
 int main(int argc, char *argv[]){
-	FORARGS
-	{
-		ARG ('h', "Show this menu") {
+	FORARGS( argc, argv) {
+		ARG ('h', "Show this menu")
 			// Pass in the current function as the argument function
 			HELP(main);
-		}
 
 		// Takes a value
-		ARG ('t', "Test arg") {
-			printf("-t run\n");
+		ARG ('t', "Test arg (takes a value)") {
 
 			// Print value if its given:
 			HASVALUE {
-				ALIGNARG(value);
-				printf("%s\n", value);
+
+				// Get the value after the '='
+				char *value = ALIGNARG;
+				printf("-t was run with value: %s\n", value);
 
 			} else
-				printf("No args given to -t\n");
+				puts("-t was run with no value");
 		}
 
 		ARGELSE {
-			printf("Unrecognised: %c\n", argv[__arg_word][__arg_letter]);
+			printf("Unrecognised: %c\n", ARGVAL);
 			return 1;
 		}
 	}
+
+	if (argc == 1)
+		puts("use -h for info");
 
 	return 0;
 }
