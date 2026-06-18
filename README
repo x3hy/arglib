@@ -18,3 +18,6 @@ Features:
 - Value collection (check example.h's "-t" flag)
 - Builtin HELP menu
 - Portable (will work on any OS)
+
+Notes:
+This library is not thread safe. Use it before thread execution. The HELP macro will return 1 after completion. Use it in a function other then main() for more control
