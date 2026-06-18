@@ -2,11 +2,12 @@
 #include "arglib.h"
 
 int main(int argc, char *argv[]){
+
+	// For each arg
 	arg_args( argc, argv) {
 		arg_option ('h', "Show this menu")
 			// Pass in the current function as the argument function
 			arg_help(main);
-			
 
 		// Takes a value
 		arg_option ('t', "Test arg (takes a value)") {
