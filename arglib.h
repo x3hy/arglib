@@ -46,7 +46,4 @@ static int arglibc;
 	break; \
 	default:
 
-#define arg_exitvalue \
-	fprintf(stderr, "Argument -%c requires a value\n", arg); \
-	return 1;
 #endif

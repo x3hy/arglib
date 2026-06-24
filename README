@@ -9,7 +9,7 @@ Which is interpreted as the following argument values: m, T, l and o. Arglib has
 
 
 Features:
-- Minimal size (just over 50 lines of code)
+- Minimal size (under 50 lines of code).
 - Zero dependencies (not even standard lib, this is thanks to macro inclusion).
 - Zero memory allocation.
 - Fast and reliable
